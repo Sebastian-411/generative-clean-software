@@ -1,0 +1,34 @@
+{
+  "name": "architecture-mastery",
+  "owner": {
+    "name": "Sebastian-411"
+  },
+  "metadata": {
+    "description": "Marketplace with a plugin for DDD, Hexagonal Architecture, Clean Architecture, SOLID, and Design Patterns — built to catch overengineering, not cause it.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "architecture-mastery",
+      "source": "plugins/architecture-mastery",
+      "description": "DDD + Hexagonal + Clean Architecture + SOLID + Design Patterns, as one coherent set of skills for designing, reviewing, and refactoring backend systems.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Sebastian-411"
+      },
+      "license": "MIT",
+      "keywords": [
+        "ddd",
+        "hexagonal-architecture",
+        "clean-architecture",
+        "solid",
+        "design-patterns",
+        "architecture-review",
+        "multi-agent",
+        "staff-engineer",
+        "spec-driven-development",
+        "backend"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 ---
 name: staff-workflow
 description: Orquesta a los agentes story-writer, architecture-reviewer, planner, implementer, code-reviewer y test-engineer de este plugin como un único proceso de desarrollo adaptativo, igual que lo escalaría un staff engineer - más proceso (con story.md/plan.md en specs/ y checkpoints de aprobación humana) para un cambio grande y riesgoso, casi nada de proceso para un cambio trivial. Úsala cuando el usuario pida implementar una feature o fix "de punta a punta", diga algo como "hazlo como lo haría un staff engineer" o "quiero todo el proceso", o cuando el pedido claramente involucra diseñar + planear + escribir + revisar + testear en una sola tarea. No la uses para una pregunta puntual de arquitectura (usa architecture-review) o una revisión suelta de código ya escrito (invoca code-reviewer directo).
+metadata:
+  opencode/slash: "true"
 ---
 
 # Flujo de desarrollo adaptativo (staff engineer)
@@ -8,6 +10,8 @@ description: Orquesta a los agentes story-writer, architecture-reviewer, planner
 Un staff engineer no aplica el mismo proceso a un typo que a un módulo nuevo con reglas de negocio. Esta skill decide cuánto proceso aplicar antes de aplicarlo - el criterio de "no sobre-diseñar" de `architecture-review` se extiende aquí al proceso mismo: no sobre-procesar un cambio trivial.
 
 ## Paso 0 — Clasifica el cambio antes de invocar a nadie
+
+Si el pedido es un proyecto desde 0 o la carpeta está vacía, clasifícalo como **mediano/grande** (o **sensible** si toca auth/pagos/PII) y pasa `greenfield-defaults` + `frontend-craft` como restricción fija a `architecture-reviewer`, `planner` e `implementer`: monorepo, Next.js + Astro + NestJS hexagonal, Docker por app y compose raíz, UI de producción (landing trailer / app simple), Playwright de diseño. No dejes que elijan otro stack ni un frontend de template.
 
 Responde tú mismo, en el hilo principal, sin gastar un subagente en esto:
 
@@ -26,7 +30,7 @@ Responde tú mismo, en el hilo principal, sin gastar un subagente en esto:
   3. `planner`, con `story.md` + el veredicto de `architecture-reviewer` - produce `plan.md` en la misma carpeta, con fases chicas y verificables. **Checkpoint**: muestra el plan y espera aprobación antes de tocar código.
   4. `implementer`, fase por fase según `plan.md` - no le pases el plan completo como "implementa todo esto", dale una fase a la vez y confirma que pasó sus tests antes de avanzar a la siguiente.
   5. `code-reviewer` y `test-engineer` sobre el resultado completo de `implementer` - estos dos pueden ir en paralelo, uno no bloquea al otro porque los dos solo leen el mismo diff.
-- **Sensible**: lo anterior según tamaño, más una pasada explícita con la skill `security-review` antes de dar el trabajo por cerrado. No la sustituyas por el pase básico de seguridad de `code-reviewer` - ese es un filtro rápido, no el análisis completo.
+- **Sensible**: lo anterior según tamaño, más una pasada explícita de seguridad del host antes de dar el trabajo por cerrado. En Cursor usa `/review-security`. En Claude Code, la skill `security-review` si está disponible. En Codex u OpenCode, una revisión de seguridad dedicada (agente o prompt explícito). No la sustituyas por el pase básico de `code-reviewer` — ese es un filtro rápido, no el análisis completo.
 
 ## Paso 1bis — Disciplina de velocidad en Story/Plan (no negociable)
 

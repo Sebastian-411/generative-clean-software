@@ -1,8 +1,8 @@
 {
   "name": "architecture-mastery",
   "owner": {
-    "name": "your-github-handle",
-    "url": "https://github.com/your-github-handle"
+    "name": "Sebastian-411",
+    "url": "https://github.com/Sebastian-411"
   },
   "metadata": {
     "description": "Open-source Claude Code marketplace with a plugin for DDD, Hexagonal Architecture, Clean Architecture, SOLID, and Design Patterns — built to catch overengineering, not cause it.",
@@ -15,8 +15,8 @@
       "description": "DDD + Hexagonal + Clean Architecture + SOLID + Design Patterns, as one coherent set of skills for designing, reviewing, and refactoring backend systems.",
       "version": "1.0.0",
       "author": {
-        "name": "your-github-handle",
-        "url": "https://github.com/your-github-handle"
+        "name": "Sebastian-411",
+        "url": "https://github.com/Sebastian-411"
       },
       "license": "MIT",
       "keywords": [

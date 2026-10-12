@@ -1,0 +1,22 @@
+{
+  "name": "architecture-mastery",
+  "version": "1.0.0",
+  "description": "DDD + Hexagonal Architecture + Clean Architecture + SOLID + Design Patterns as one coherent skill set, plus a multi-agent staff-engineer workflow — with an explicit anti-overengineering check on every recommendation and on the process itself.",
+  "author": {
+    "name": "Sebastian-411"
+  },
+  "homepage": "https://github.com/Sebastian-411/generative-clean-software",
+  "repository": "https://github.com/Sebastian-411/generative-clean-software",
+  "license": "MIT",
+  "keywords": [
+    "ddd",
+    "hexagonal-architecture",
+    "clean-architecture",
+    "solid",
+    "design-patterns",
+    "architecture-review",
+    "multi-agent",
+    "staff-engineer",
+    "spec-driven-development"
+  ]
+}

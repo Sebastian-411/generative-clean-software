@@ -1,6 +1,8 @@
 ---
 name: architecture-review
 description: Orquesta domain-driven-design, hexagonal-architecture, clean-architecture, solid-principles y design-patterns como un solo criterio coherente para diseñar backends nuevos o auditar código existente. Úsala como punto de entrada cuando el usuario pida "diseña esto con DDD + Hexagonal + Clean + SOLID", pida una revisión de arquitectura general, o pregunte si su código está sobre-diseñado o mal diseñado. Esta skill decide primero si la complejidad se justifica, antes de aplicar cualquier patrón - evitar overengineering es el criterio, no una excepción.
+metadata:
+  opencode/slash: "true"
 ---
 
 # Revisión y diseño de arquitectura (skill orquestadora)
@@ -19,6 +21,10 @@ Si la respuesta es "poca lógica, un solo consumidor, vida corta": la recomendac
 
 Solo si hay complejidad real, avanza a los pasos siguientes.
 
+## Paso 0b — Proyecto desde 0 (usa greenfield-defaults)
+
+Si la carpeta está vacía, el usuario pide un proyecto nuevo, o no hay stack definido: no preguntes lenguaje. Aplica `greenfield-defaults` (monorepo `apps/`, Next.js + Astro + NestJS hexagonal, Docker por app y compose raíz). El Paso 0 sigue valiendo para no inflar el dominio; no anula el scaffold. Si el repo ya tiene stack, ignora este paso.
+
 ## Paso 1 — Modelar el dominio (usa domain-driven-design)
 
 Identifica Entities, Value Objects y dónde están las invariantes reales de negocio. Define el Aggregate más pequeño que mantenga la consistencia transaccional necesaria. Si hay más de un Bounded Context involucrado, sepáralos antes de seguir.
@@ -31,6 +37,8 @@ Con el dominio ya modelado, decide:
 - Dónde vive el composition root que conecta implementaciones concretas.
 
 Usa el vocabulario de puertos/adapters o de capas concéntricas indistintamente - son el mismo modelo. No dupliques ambos vocabularios en el mismo diseño.
+
+Si el diseño incluye UI, aplica `frontend-craft` en el mismo pase: landing = cinematográfica (Astro), app = simple y hermosa (Next), un solo design system (`packages/ui`), Playwright como criterio de "hecho" de las páginas. No dejes el frontend como "luego lo pintamos".
 
 ## Paso 3 — Verificar con SOLID a nivel de clase (usa solid-principles)
 

@@ -1,6 +1,6 @@
 ---
 name: hexagonal-architecture
-description: Diseña o revisa un backend usando Arquitectura Hexagonal (Ports & Adapters) - separar el dominio/aplicación de frameworks, DB, colas y HTTP mediante puertos e interfaces. Úsala cuando el usuario pida diseñar un servicio nuevo, aislar el dominio de un framework (Spring, Express, Django, etc.), decidir dónde va una interfaz o un adapter, o revisar si una capa está filtrando detalles de infraestructura hacia el dominio. NO la apliques si el proyecto es un script pequeño, un CRUD trivial o un prototipo desechable - primero evalúa si la complejidad la justifica.
+description: Diseña o revisa un backend usando Arquitectura Hexagonal (Ports & Adapters) - separar el dominio/aplicación de frameworks, DB, colas y HTTP mediante puertos e interfaces. Úsala cuando el usuario pida diseñar un servicio nuevo, aislar el dominio de un framework (NestJS, Spring, Express, Django, etc.), decidir dónde va una interfaz o un adapter, o revisar si una capa está filtrando detalles de infraestructura hacia el dominio. En un proyecto desde 0, NestJS hexagonal es el default de `greenfield-defaults`. NO la apliques si el proyecto es un script pequeño, un CRUD trivial o un prototipo desechable - primero evalúa si la complejidad la justifica.
 ---
 
 # Arquitectura Hexagonal (Ports & Adapters)

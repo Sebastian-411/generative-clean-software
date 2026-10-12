@@ -1,0 +1,66 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "skills": ["./plugins/architecture-mastery/skills"],
+  "agent": {
+    "architecture-reviewer": {
+      "description": "Agente de solo lectura para auditar el diseño de una feature nueva o el código ya escrito contra DDD + Hexagonal + Clean + SOLID + Design Patterns, con el Paso 0 anti-overengineering como primer filtro.",
+      "mode": "subagent",
+      "prompt": "{file:./plugins/architecture-mastery/agents/architecture-reviewer.md}",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny"
+      }
+    },
+    "code-reviewer": {
+      "description": "Revisor de solo lectura sobre un diff/PR: correctitud, seguridad básica y simplificación. Complementa a architecture-reviewer; mira el código línea por línea.",
+      "mode": "subagent",
+      "prompt": "{file:./plugins/architecture-mastery/agents/code-reviewer.md}",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "*test*": "allow",
+          "*lint*": "allow"
+        }
+      }
+    },
+    "story-writer": {
+      "description": "Redacta specs/<timestamp>_<slug>/story.md — el qué y el por qué de un cambio mediano/grande/sensible, con criterios de aceptación verificables. Un solo pase, un archivo corto.",
+      "mode": "subagent",
+      "prompt": "{file:./plugins/architecture-mastery/agents/story-writer.md}",
+      "permission": {
+        "edit": "allow",
+        "bash": "deny"
+      }
+    },
+    "planner": {
+      "description": "Convierte el veredicto de architecture-reviewer y el story.md aprobado en un plan.md de fases chicas y verificables. No rediseña.",
+      "mode": "subagent",
+      "prompt": "{file:./plugins/architecture-mastery/agents/planner.md}",
+      "permission": {
+        "edit": "allow",
+        "bash": "deny"
+      }
+    },
+    "implementer": {
+      "description": "Implementa el mínimo código correcto para el problema real, respetando el veredicto de arquitectura ya decidido. No es una demo de patrones.",
+      "mode": "subagent",
+      "prompt": "{file:./plugins/architecture-mastery/agents/implementer.md}",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow"
+      }
+    },
+    "test-engineer": {
+      "description": "Diseña y escribe tests de negocio y bordes del código que implementer acaba de cambiar. Solo toca archivos de test.",
+      "mode": "subagent",
+      "prompt": "{file:./plugins/architecture-mastery/agents/test-engineer.md}",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow"
+      }
+    }
+  }
+}

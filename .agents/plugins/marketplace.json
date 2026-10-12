@@ -1,0 +1,23 @@
+{
+  "name": "architecture-mastery",
+  "interface": {
+    "displayName": "architecture-mastery"
+  },
+  "plugins": [
+    {
+      "name": "architecture-mastery",
+      "source": {
+        "source": "local",
+        "path": "./plugins/architecture-mastery"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity",
+      "interface": {
+        "displayName": "architecture-mastery"
+      }
+    }
+  ]
+}
