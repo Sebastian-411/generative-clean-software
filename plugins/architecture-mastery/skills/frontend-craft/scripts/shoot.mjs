@@ -89,6 +89,7 @@ for (const [name, viewport] of Object.entries(VIEWPORTS)) {
       sizes.add(Math.round(parseFloat(s.fontSize)));
       colors.add(s.color);
       // Peso light en tamaño de lectura: trazos finos que se rasterizan "cuadrados" (el tell tipográfico más común).
+      const fs = parseFloat(s.fontSize);
       const wgt = +s.fontWeight, fam0 = s.fontFamily.split(",")[0].replace(/["']/g, "").trim();
       if (wgt < 400 && fs < 40) { const k = `${fam0} ${wgt} ${Math.round(fs)}px`; thin[k] = (thin[k] ?? 0) + el.innerText.length; }
       // Peso o estilo que la fuente no cargó: el navegador lo sintetiza (negrita falsa, itálica inclinada a la fuerza).
@@ -96,7 +97,6 @@ for (const [name, viewport] of Object.entries(VIEWPORTS)) {
       // Texto transparente sin background-clip:text propio (típico gradient-text roto por spans animados)
       if (/rgba\(.*,\s*0\)$/.test(s.color) && s.backgroundClip !== "text" && s.webkitBackgroundClip !== "text")
         invisible.push(el.innerText.trim().slice(0, 30));
-      const fs = parseFloat(s.fontSize);
       const ls = s.letterSpacing === "normal" ? 0 : parseFloat(s.letterSpacing);
       if (fs >= 48 && ls >= 0) timidDisplay++;
       if (el.tagName === "P") {

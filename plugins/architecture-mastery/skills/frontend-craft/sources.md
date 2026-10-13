@@ -12,6 +12,9 @@ Los scripts viven en `scripts/` de esta skill. Córrelos desde un directorio con
 | Watermelon UI | Blocks de página y componentes animados con fuente | API JSON (curl) + shadcn CLI, o MCP |
 | Motion-Primitives | Primitivas de motion de calidad (React + Motion + Tailwind) | CLI propio |
 | Haikei | Fondos/texturas SVG generativos en tu paleta | `haikei.mjs` (Playwright) |
+| 21st.dev | 12.000+ secciones React + Tailwind (hero, pricing, testimonios, FAQ, CTA) | `twentyfirst.mjs` (Playwright) + shadcn CLI o MCP |
+| UI/UX Pro Max | Patrón de conversión por industria, reglas UX y checklist | `search.py` de la skill (Python) |
+| Motion (Framer Motion) | Movimiento en React/Next | `templates/motion/motion.tsx` |
 
 ## Refero Styles — `styles.refero.design`
 
@@ -89,6 +92,39 @@ node scripts/haikei.mjs blurry-gradient --colors "#0b0b0c,#1b2a4a,#3b5bdb" --out
 ```
 
 Cuándo sirve: separadores de sección (waves/peaks/steps), luz de fondo (blurry-gradient), textura de marca (low-poly-grid, symbol-scatter). Cuándo no: como protagonista del hero en un concepto editorial o de producto. Siempre **en la paleta** del DESIGN.md y a baja intensidad; combínalo con grain.
+
+## 21st.dev — `twentyfirst.mjs`
+
+```bash
+node scripts/twentyfirst.mjs search hero --n 12 --out design/21st/hero     # previews reales a 1440 → contact-sheet.png
+node scripts/twentyfirst.mjs search testimonials --theme light
+node scripts/twentyfirst.mjs install <autor>/<slug>                         # requiere API_KEY_21ST
+```
+
+Cada página de 21st tiene un gemelo en Markdown (`Accept: text/markdown`), y el listado está en `https://21st.dev/community/components/s/<etiqueta>.md`. El script lo usa sin key y captura el bundle de la preview (`cdn.21st.dev`). **Elige mirando la hoja de contactos**, no por el nombre.
+
+- **Instalar** pide una key: `npx shadcn@latest add "https://21st.dev/r/<autor>/<slug>?api_key=$API_KEY_21ST"`. Sin key el registro responde 403. La key se crea en `21st.dev/mcp`, que también instala el MCP (`npx @21st-dev/cli@latest init --client claude`).
+- **Licencia**: muchas fichas dicen `unknown`. Usa solo MIT o equivalente. Si el componente viene de una librería abierta (Magic UI, Aceternity, Origin UI…), instálalo **desde el registro de esa librería**, sin key: `npx shadcn@latest add "https://magicui.design/r/marquee"`.
+- Un componente de 21st es un punto de partida. Lleva tokens propios (color, fuente, radios, sombras, motion) y locale propio (`Intl.NumberFormat("es-CO")`, no `en-US`), y se mide con `shoot.mjs` como cualquier otra pieza. Los que traen gradiente violeta, glass o spotlight caen en la lista negra de premium-bar.md.
+
+## UI/UX Pro Max — `nextlevelbuilder/ui-ux-pro-max-skill` (MIT)
+
+```bash
+/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill    # luego: /plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+npm i -g ui-ux-pro-max-cli && uipro init --ai claude             # alternativa sin marketplace
+python scripts/search.py "ai automation agency b2b" --design-system -p "Kora"
+python scripts/search.py "landing conversion" --domain ux        # también: style, typography, chart, icons
+python scripts/search.py "hero animation" --stack react          # o html-tailwind
+```
+
+Es una base de datos de estilos, paletas y reglas por industria. **Úsala como fuente filtrada, no como dirección**:
+
+- **Sí**: el patrón de página por industria (p. ej. "Product Demo + Features" para servicios de IA), las reglas UX (animar 1–2 elementos clave por vista, `prefers-reduced-motion`, tokens de motion compartidos, contraste, estados) y su checklist previo a entregar.
+- **No sin medir**: su paleta y su tipografía. Para "AI automation agency" recomienda violeta `#7C3AED`, cian y solo Inter, que es exactamente el promedio que delata un sitio generado. Recalibra color y tipo con `dissect.mjs` contra las referencias del modo. Si su sugerencia cae fuera del rango, gana la referencia.
+
+## Motion (Framer Motion) — React/Next
+
+Paquete `motion` (`import { motion } from "motion/react"`). En sitios Next arranca de `templates/motion/motion.tsx`: `Reveal`, `Stagger`/`StaggerItem` y `LineReveal`, con una sola curva y reduced-motion resuelto. No mezcles otras curvas ni distancias: el sitio entero habla un solo idioma de movimiento.
 
 ## Otras referencias (si el usuario las tiene)
 

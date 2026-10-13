@@ -23,7 +23,7 @@ Entrada: el brief (`design/BRIEF.md` o el encargo). Si no existe, escríbelo tú
    - `refero.mjs list --q "<concepto>"` con 3–4 consultas por material/luz/acento (no por industria), más `--tab popular`.
    - `refero.mjs get` de los 4–6 más prometedores → `design/references/<nombre>/`. **Abre `style-page.png`** de cada uno. Navega sus `related.md`.
    - Si el usuario dio URLs propias: `shoot.mjs <url> --out design/references/<nombre>` y analízalas igual.
-2. **Componentes y motion**: consulta la API de Watermelon (`kind=blocks` por sección que hará falta: hero, cta, pricing, footer, bento…; `kind=animated-components`) y descarga/abre las previews `.webp` de los candidatos. Elige primitivas de Motion-Primitives para el momento firma y los reveals.
+2. **Componentes y motion**: para React/Next, corre `twentyfirst.mjs search <sección>` (hero, testimonials, pricing, faq, cta) y abre `contact-sheet.png`; solo candidatos MIT. Si UI/UX Pro Max está instalada, toma su patrón de página y sus reglas UX, pero no su paleta ni su tipografía sin medirlas. Consulta la API de Watermelon (`kind=blocks` por sección que hará falta: hero, cta, pricing, footer, bento…; `kind=animated-components`) y descarga/abre las previews `.webp` de los candidatos. Elige primitivas de Motion-Primitives para el momento firma y los reveals.
 3. **Propón 3 direcciones realmente distintas** en `design/DIRECTIONS.md`. Cada una:
    - Concepto en una línea (material + luz + acento) y por qué encaja con el brief.
    - Referencia(s) Refero con ruta a la captura.

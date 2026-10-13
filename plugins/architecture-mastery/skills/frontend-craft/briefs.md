@@ -4,6 +4,17 @@ Cinco briefs de cliente muy distintos, resueltos con esta skill. **Cada uno elig
 
 Todos se validaron con Playwright en 1440 y 390: carga sin errores, CTA visible, sin overflow, la interacción del brief funcionando de punta a punta, tipografía sin pesos light ni sintetizados, y reduced-motion.
 
+## 0. Kora — el prompt de la guía "$10k website" (agencia de automatización con IA)
+
+El encargo llegó como prompt genérico: "web moderna de alta conversión para una agencia de automatización con IA, Framer Motion, minimal, hero, servicios, testimonios, FAQ y CTA". Pasado por el flujo:
+
+- **Brief**: antes de diseñar se completaron el público (gerentes de operaciones y finanzas), una acción (diagnóstico de 30 min) y la vibra ("taller de ingeniería").
+- **Pro Max** aportó el patrón "Product Demo + Features" y las reglas UX. Su violeta + Inter se descartó al medir Founderdex, Plada y Zolvo, que usan una grotesca 500 con tracking −0,04 em, papel, tinta y un acento.
+- **Hero**: el producto trabajando, no una ilustración. Un agente concilia una factura en vivo: la lee, la cruza con la OC, detecta una retención mal aplicada y la causa en SAP. Tiene pausa visible, no corre fuera de pantalla y con reduced-motion muestra el estado final.
+- **21st.dev**: Marquee, NumberTicker y BorderBeam de Magic UI, instalados desde `magicui.design/r` (MIT) y re-tematizados (locale `es-CO`, acento propio).
+- **Motion**: un solo idioma (`templates/motion/motion.tsx`), y el titular es el único gesto firma.
+- **Validación**: `shoot.mjs` sin alertas en 1440 y 390 (9 tamaños de fuente, una familia más serif de acento), sin errores de consola, con y sin reduced-motion.
+
 ## 1. OMEGA — deep tech, generar expectativa ("instalación científica ultrasecreta")
 
 - **Dirección:** negro de observatorio. Serif editorial (Instrument Serif) para la voz, Inter Tight 400 para el cuerpo y mono para los instrumentos. La luz la pone el planeta.

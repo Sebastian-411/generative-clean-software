@@ -97,6 +97,7 @@ En cambios sensibles, usa la revisión de seguridad del host (Cursor: `/review-s
 | `app-shell/` | Aplicativo | Pantalla de app simple y hermosa: una acción primaria, estados diseñados, ⌘K. `app.spec.ts`. |
 | `anchor-scene/` | Brutal de producto | El producto 3D viaja por la página y se posa en anclas del DOM (patrón Fizzi), con lata procedural y etiqueta propia. `anchor.spec.ts`. |
 | `scroll-scene/` | Lanzamiento cinematográfico | Escena 3D por actos guiada por scroll, cámara orbital y calidad adaptativa. `scene.spec.ts`. |
+| `motion/` | Movimiento en React/Next | Presets de Motion (Framer Motion): `Reveal`, `Stagger`, `LineReveal`, una sola curva y reduced-motion. |
 | `patterns/` | Piezas de briefs resueltos | Planeta con escenarios, grafo idea → empresa, linterna, registros escritos, audio ambiente, paleta por sección (ver `briefs.md`). |
 
 Herramientas Playwright en `scripts/`:
@@ -105,6 +106,7 @@ Herramientas Playwright en `scripts/`:
 - `scrollscope.mjs` arma el storyboard del scroll.
 - `shoot.mjs` captura y audita.
 - `photos.mjs` busca fotografía con licencia abierta.
+- `twentyfirst.mjs` trae previews reales de 21st.dev en hoja de contactos.
 - `refero.mjs`, `haikei.mjs` y `still.mjs` completan el set.
 
 ## Cómo está empaquetado

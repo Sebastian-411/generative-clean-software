@@ -28,7 +28,7 @@ Archivos de apoyo:
 
 - [reference-bar.md](reference-bar.md) — **la vara medida**: 10 sitios de referencia con valores reales, lo que tienen en común, los modos y el proceso de calibración.
 - [premium-bar.md](premium-bar.md) — rúbrica, lista negra de tells (los del promedio y los del espectáculo), reglas de oficio.
-- [sources.md](sources.md) — Refero, Watermelon, Motion-Primitives, Haikei, Openverse.
+- [sources.md](sources.md) — Refero, Watermelon, Motion-Primitives, Haikei, Openverse, 21st.dev, UI/UX Pro Max y Motion.
 - [cinematic.md](cinematic.md) — solo para el modo lanzamiento cinematográfico.
 - [playwright-checks.md](playwright-checks.md) — loop de crítica visual y tests de regresión.
 - `templates/product-site/` — **sitio de producto/B2B calibrado** (el default). `templates/anchor-scene/` — **brutal de producto**: el producto 3D viaja por la página y se posa en anclas del DOM (patrón Fizzi), con lata procedural y etiqueta de marca propia. `templates/app-shell/` — pantalla de app. `templates/scroll-scene/` — escena 3D por actos (lanzamientos).
@@ -40,11 +40,15 @@ Archivos de apoyo:
   - `shoot.mjs`: captura y auditoría (`--mode app`).
   - `photos.mjs`: fotos con licencia abierta y hoja de contactos.
   - `scrollscope.mjs`: storyboard del scroll (16–24 fotogramas) para entender y comparar coreografías 3D.
+  - `twentyfirst.mjs`: previews reales de 21st.dev por etiqueta (hero, pricing, faq…) en hoja de contactos. Instala con key, o desde el registro de la librería MIT de origen.
   - `refero.mjs`, `haikei.mjs` y `still.mjs`.
+- `templates/motion/` — presets de Motion (Framer Motion) para React/Next: una sola curva, reduced-motion y sin romper la hidratación.
 
 ## 1. Brief
 
 En `design/BRIEF.md` (5–10 líneas): qué es y qué vende sin adjetivos, para quién, **una** acción, referencias del usuario (URLs), y **qué contenido real existe**: capturas del producto, fotos, logos de clientes con permiso, cifras, casos, sellos. Si no existe, se produce en el paso 3; nunca se tapa con efectos.
+
+Si el encargo llega como prompt corto ("una web moderna para una agencia de IA, con animaciones premium y secciones X, Y, Z"), complétalo antes de diseñar con lo que pide el checklist de prompt: **estilo, colores, layout, público, secciones y vibra de marca**. Lo que el usuario no diga lo decides tú y lo declaras en el brief, para que nada quede en el default del modelo. "Moderno", "premium" y "minimal" no son dirección. Un material, una luz y un acento sí lo son ("taller de ingeniería: papel cálido, tinta y un azul cobalto").
 
 ## 2. Calibrar — medir la vara, no imaginarla
 
@@ -74,7 +78,7 @@ Es lo que más separa un sitio caro de uno generado:
 - **App**: `templates/app-shell/`: una acción primaria por pantalla, estados diseñados, ⌘K.
 - **Lanzamiento cinematográfico**: `templates/scroll-scene/` + [cinematic.md](cinematic.md), solo con key art, video o modelo 3D **de la marca**.
 - Grids siempre con `minmax(0, …)`: una tabla con `nowrap` dentro de `1fr` rompe el layout.
-- Componentes de Watermelon/Motion-Primitives solo si encajan con la referencia y re-tematizados. Motion por defecto: aparición sobria de 8 px, hovers y nada más.
+- En Next/React, `templates/motion/motion.tsx` para el movimiento. Componentes de 21st.dev, Watermelon o Motion-Primitives solo si encajan con la referencia, re-tematizados y con licencia MIT. Motion por defecto: aparición sobria de 8 px, hovers y nada más.
 
 ## 5. Comparar — hasta que la lámina no delate cuál es la tuya
 
