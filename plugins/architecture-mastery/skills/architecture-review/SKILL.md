@@ -38,7 +38,7 @@ Con el dominio ya modelado, decide:
 
 Usa el vocabulario de puertos/adapters o de capas concéntricas indistintamente - son el mismo modelo. No dupliques ambos vocabularios en el mismo diseño.
 
-Si el diseño incluye UI, aplica `frontend-craft` en el mismo pase: landing = cinematográfica (Astro), app = simple y hermosa (Next), un solo design system (`packages/ui`), Playwright como criterio de "hecho" de las páginas. No dejes el frontend como "luego lo pintamos".
+Si el diseño incluye UI, aplica `frontend-craft` en el mismo pase: dirección de arte con referencias reales (`design-scout` → `design/DESIGN.md`), landing con concepto y momento firma (Astro), app simple y hermosa (Next), un solo design system (`packages/ui`), capturas + rúbrica premium como criterio de "hecho". No dejes el frontend como "luego lo pintamos".
 
 ## Paso 3 — Verificar con SOLID a nivel de clase (usa solid-principles)
 

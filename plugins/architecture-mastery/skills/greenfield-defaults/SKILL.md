@@ -1,6 +1,6 @@
 ---
 name: greenfield-defaults
-description: Define el stack y la forma de carpeta cuando se inicia un proyecto desde cero o la carpeta está vacía. Úsala al crear un repo nuevo, scaffold, "proyecto desde 0", o cuando no hay lenguaje/stack definido. No la uses para extender un repo que ya tiene stack — ahí ganan las convenciones existentes. Default: monorepo con Next.js, Astro y NestJS hexagonal, cada app con su imagen Docker y su docker-compose, más un compose raíz que levanta backend y frontends juntos.
+description: 'Define el stack y la forma de carpeta cuando se inicia un proyecto desde cero o la carpeta está vacía. Úsala al crear un repo nuevo, scaffold, "proyecto desde 0", o cuando no hay lenguaje/stack definido. No la uses para extender un repo que ya tiene stack — ahí ganan las convenciones existentes. Default: monorepo con Next.js, Astro y NestJS hexagonal, cada app con su imagen Docker y su docker-compose, más un compose raíz que levanta backend y frontends juntos.'
 ---
 
 # Defaults de proyecto nuevo (greenfield)
@@ -20,7 +20,7 @@ El usuario puede overridear cualquier pieza ("solo Nest", "sin Astro", "sin Dock
 | Orquestación | `docker-compose.yml` en la raíz (backend + frontends a la vez) |
 | Por app | `Dockerfile` + `docker-compose.yml` propios, imagen propia |
 | UI kit | `packages/ui` — tokens + primitivos + compuestos, compartido por Next y Astro |
-| Craft | `frontend-craft` — landing cinematográfica (Astro), app simple y hermosa (Next), Playwright valida el diseño |
+| Craft | `frontend-craft` — `design-scout` fija dirección y DESIGN.md con referencias reales; landing premium (Astro), app simple y hermosa (Next); Tailwind v4 con tokens; loop de capturas + rúbrica |
 
 Next.js y Astro son **dos frontends**, no un framework mezclado. Next.js es la app; Astro es el sitio (marketing, content, docs). Si el pedido no necesita sitio, crea `apps/site` igual como pieza del default, o omítela solo si el usuario lo dice.
 
@@ -77,8 +77,9 @@ En `apps/api`, hexagonal es el default — no preguntes si "hace falta capas" pa
 
 El scaffold no entrega páginas grises. Desde el primer commit:
 
-- `apps/site`: landing-escena (un WebGL, scroll que mueve cámara/modelo, ≥3 actos, CTA único). Playwright cubre hero, un acto a mitad de scroll, y reduced-motion.
-- `apps/web`: app en modo producto (una acción por pantalla, empty/loading/error, cero WebGL). Playwright cubre la pantalla inicial.
+- Antes de la primera página: `design/BRIEF.md` + `design-scout` → `design/DESIGN.md` (tokens en `packages/ui`, Tailwind v4 `@theme`).
+- `apps/site`: sitio desde `frontend-craft/templates/product-site`, calibrado contra 2–3 referencias diseccionadas (`dissect.mjs`) y comparado lado a lado (`compare.mjs`) hasta no delatarse; `site.spec.ts` en verde. La escena 3D (`templates/scroll-scene`) solo si es un lanzamiento con assets oficiales.
+- `apps/web`: pantallas desde `frontend-craft/templates/app-shell` con `app.spec.ts` en verde.
 - `packages/ui` existe y ambas apps lo importan. No hay estilos one-off en las páginas.
 
 ## Qué no hacer

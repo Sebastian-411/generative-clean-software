@@ -1,6 +1,6 @@
 ---
 name: design-patterns
-description: Elige o revisa el uso de patrones de diseño GoF (Strategy, Factory, Adapter, Decorator, Observer, Repository, etc.) en el contexto de un backend con DDD/Hexagonal/Clean Architecture. Úsala cuando el usuario pida sugerir un patrón para un problema concreto, nombrar un patrón que ya está usando sin saberlo, o revisar si un patrón fue aplicado donde no hacía falta. Aplica siempre junto con el criterio anti-overengineering: nombrar el patrón correcto para el código simple que ya funciona no es una mejora.
+description: "Elige o revisa el uso de patrones de diseño GoF (Strategy, Factory, Adapter, Decorator, Observer, Repository, etc.) en el contexto de un backend con DDD/Hexagonal/Clean Architecture. Úsala cuando el usuario pida sugerir un patrón para un problema concreto, nombrar un patrón que ya está usando sin saberlo, o revisar si un patrón fue aplicado donde no hacía falta. Aplica siempre junto con el criterio anti-overengineering: nombrar el patrón correcto para el código simple que ya funciona no es una mejora."
 ---
 
 # Design Patterns (GoF) aplicados a arquitectura backend

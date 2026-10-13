@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Norte — La tesorería que se concilia sola</title>
+<meta name="description" content="Norte conecta tus bancos, concilia cada movimiento contra tu ERP y te deja cerrar el mes un día antes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Calibrado con referencias medidas (dissect.mjs): Plada, Founderdex, Apple, YC.
+   Una familia · H1 64/500/-0.035em · cuerpo 17/1.6 · contenedor 1200 · nav 64 · botones píldora 40.
+   El producto es la ilustración. Motion: casi ninguno. */
+:root{
+  --bg:#fafaf9; --surface:#fff; --stage:#f3f3f1; --ink:#0b0b0b; --ink-2:#4b4b4b; --ink-3:#8a8a86;
+  --line:rgba(0,0,0,.08); --line-2:rgba(0,0,0,.14);
+  --pos:#0e7a4d; --pos-bg:#e8f4ee; --neg:#b4410f; --neg-bg:#fbeee7; --warn:#9a6a00; --warn-bg:#fbf3df;
+  --sans:"Geist", "Inter", system-ui, sans-serif;
+  --container:1200px; --gutter:24px;
+  --r-s:8px; --r-m:12px; --r-l:18px;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px -12px rgba(0,0,0,.12);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0}
+html{background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
+body{font:400 17px/1.6 var(--sans);font-feature-settings:"ss01","cv11"}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:calc(var(--container) + var(--gutter) * 2);margin:0 auto;padding:0 var(--gutter)}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:14px;font-weight:500;color:var(--ink-3);margin-bottom:16px}
+h1{font-size:64px;font-weight:500;line-height:1.02;letter-spacing:-.035em;text-wrap:balance}
+h2{font-size:44px;font-weight:500;line-height:1.08;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:22px;font-weight:500;line-height:1.3;letter-spacing:-.01em}
+.lead{font-size:19px;line-height:1.55;color:var(--ink-2);max-width:34em;text-wrap:pretty}
+p{color:var(--ink-2);text-wrap:pretty}
+.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px;border-radius:999px;font:500 15px/1 var(--sans);white-space:nowrap;transition:background .2s,transform .2s var(--ease)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:#2a2a2a}
+.btn-light{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line-2)}
+.btn-light:hover{background:var(--stage)}
+.link{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:15px;border-bottom:1px solid var(--line-2);padding-bottom:2px}
+.link:hover{border-color:var(--ink)}
+:focus-visible{outline:2px solid #2563eb;outline-offset:2px;border-radius:6px}
+
+/* anuncio + nav */
+.announce{background:var(--ink);color:#e9e9e6;font-size:14px;text-align:center;padding:9px 16px}
+.announce a{color:#fff;font-weight:500;margin-left:6px}
+.nav{position:sticky;top:0;z-index:20;background:rgba(250,250,249,.82);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;height:64px;gap:40px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:600;font-size:17px;letter-spacing:-.01em}
+.logo svg{width:22px;height:22px}
+.nav ul{display:flex;gap:28px;list-style:none;padding:0;font-size:15px;color:var(--ink-2)}
+.nav ul a:hover{color:var(--ink)}
+.nav .right{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:15px}
+
+/* hero */
+.hero{padding:88px 0 96px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:center}
+.hero .ctas{display:flex;align-items:center;gap:22px;margin-top:32px}
+.hero .proof{margin-top:40px;display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--ink-3)}
+.hero .proof span{display:inline-flex;align-items:center;gap:7px}
+.hero .proof svg{width:14px;height:14px;stroke:var(--ink-3);fill:none;stroke-width:1.8}
+
+/* ventana de producto */
+.app{min-width:0;position:relative;background:var(--surface);border-radius:var(--r-l);box-shadow:0 0 0 1px var(--line),0 24px 60px -24px rgba(0,0,0,.25);overflow:hidden;font-size:13px;line-height:1.4}
+.app-top{display:flex;align-items:center;gap:10px;height:44px;padding:0 16px;border-bottom:1px solid var(--line)}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;background:#e5e5e2}
+.crumb{color:var(--ink-3);margin-left:8px}.crumb b{color:var(--ink);font-weight:500}
+.app-top .pill{margin-left:auto}
+.pill{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap}
+.pill.pos{background:var(--pos-bg);color:var(--pos)}.pill.neg{background:var(--neg-bg);color:var(--neg)}.pill.warn{background:var(--warn-bg);color:var(--warn)}.pill.neu{background:var(--stage);color:var(--ink-2)}
+.pill.pos::before,.pill.neg::before,.pill.warn::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.app-kpis{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+.app-kpis div{padding:14px 16px}
+.app-kpis div+div{border-left:1px solid var(--line)}
+.app-kpis small{display:block;color:var(--ink-3);font-size:12px;margin-bottom:4px}
+.app-kpis strong{font-size:20px;font-weight:500;letter-spacing:-.02em}
+.app-kpis em{font-style:normal;font-size:12px;color:var(--pos);margin-left:6px}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th{font-weight:500;color:var(--ink-3);font-size:12px;text-align:left;padding:10px 16px;border-bottom:1px solid var(--line)}
+td{vertical-align:middle;padding:11px 16px;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+td.r,th.r{text-align:right}
+tr:last-child td{border-bottom:0}
+.bank{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;font-size:10px;font-weight:600;color:#fff;margin-right:8px;vertical-align:middle;line-height:1}
+.float{position:absolute;right:-28px;bottom:-30px;width:300px;background:var(--surface);border-radius:var(--r-m);box-shadow:0 0 0 1px var(--line),0 18px 40px -16px rgba(0,0,0,.3);padding:16px;font-size:13px}
+.float .row{display:flex;justify-content:space-between;align-items:center}
+.float h4{font-weight:500;font-size:14px;margin:10px 0 4px}
+.float p{font-size:13px;line-height:1.45;color:var(--ink-2)}
+.float .acts{display:flex;gap:8px;margin-top:14px}
+.float .acts span{flex:1;height:32px;border-radius:999px;display:grid;place-items:center;font-weight:500}
+.float .acts .ok{background:var(--ink);color:#fff}.float .acts .no{background:var(--stage)}
+.hero-visual{position:relative;padding:0 28px 30px 0}
+
+/* métricas */
+.metrics{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.metrics .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.metrics div{padding:32px 24px 30px 0}
+.metrics div+div{padding-left:24px;border-left:1px solid var(--line)}
+.metrics strong{display:block;font-size:36px;font-weight:500;letter-spacing:-.03em;line-height:1.1}
+.metrics span{font-size:15px;color:var(--ink-3)}
+
+/* secciones */
+section.block{padding:128px 0}
+.head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:end;margin-bottom:56px}
+.head p{max-width:30em}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.stage{background:var(--stage);border-radius:var(--r-l);height:300px;display:grid;place-items:center;padding:28px;margin-bottom:22px;overflow:hidden}
+.mini{width:100%;max-width:300px;background:var(--surface);border-radius:var(--r-m);box-shadow:var(--shadow);font-size:13px;line-height:1.4;padding:14px}
+.mini .line{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line)}
+.mini .line:first-of-type{border-top:0}
+.mini b{font-weight:500}
+.mini small{color:var(--ink-3);font-size:12px}
+.steps h3{margin-bottom:8px}
+.steps p{font-size:15px}
+.k{font-size:12px;color:var(--ink-3);margin-bottom:8px}
+
+/* producto grande */
+.showcase{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.showcase .center{text-align:center;max-width:760px;margin:0 auto 56px}
+.showcase .center .lead{margin:20px auto 0}
+.dash{display:grid;grid-template-columns:220px 1fr;font-size:13px}
+.dash aside{border-right:1px solid var(--line);padding:14px 10px;display:grid;align-content:start;gap:2px;background:#fcfcfb}
+.dash aside a{padding:7px 10px;border-radius:6px;color:var(--ink-2)}
+.dash aside a.on{background:var(--stage);color:var(--ink);font-weight:500}
+.dash aside .sep{font-size:11px;color:var(--ink-3);padding:14px 10px 4px}
+.dash .main{padding:20px 22px}
+.dash .main h4{font-size:15px;font-weight:500}
+.dash .main .sub{color:var(--ink-3);font-size:12px;margin-top:2px}
+.chart{height:200px;margin:18px 0 6px}
+.chart svg{width:100%;height:100%}
+.axis{display:flex;justify-content:space-between;color:var(--ink-3);font-size:11px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px}
+.grid3 h3{font-size:19px;margin-bottom:6px}
+.grid3 p{font-size:15px}
+.grid3>div{border-top:1px solid var(--line-2);padding-top:18px}
+
+/* foto */
+.photo{position:relative;height:560px;overflow:hidden;color:#fff}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.78),rgba(0,0,0,0) 65%),linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,0) 70%)}
+.photo .wrap{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:64px}
+.photo h2{max-width:15em;color:#fff}
+.photo p{color:rgba(255,255,255,.75);margin-top:16px;max-width:32em}
+.photo .credit{position:absolute;right:var(--gutter);bottom:16px;font-size:12px;color:rgba(255,255,255,.55);z-index:1}
+
+/* testimonio */
+.quote{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:center}
+blockquote{font-size:36px;font-weight:500;line-height:1.25;letter-spacing:-.02em;text-wrap:balance}
+.who{display:flex;align-items:center;gap:14px;margin-top:32px;font-size:15px}
+.mono{width:44px;height:44px;border-radius:50%;background:var(--stage);display:grid;place-items:center;font-weight:600;font-size:14px;color:var(--ink-2)}
+.who b{display:block;font-weight:500;color:var(--ink)}
+.who span{color:var(--ink-3)}
+.case{background:var(--surface);border-radius:var(--r-l);box-shadow:0 0 0 1px var(--line);padding:28px}
+.case .row{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--line)}
+.case .row:first-of-type{border-top:0;padding-top:0}
+.case .row span{color:var(--ink-3);font-size:15px}
+.case .row strong{font-size:22px;font-weight:500;letter-spacing:-.02em}
+
+/* seguridad */
+.sec{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.sec>div{background:var(--surface);border-radius:var(--r-l);box-shadow:0 0 0 1px var(--line);padding:28px}
+.sec svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.6;margin-bottom:28px}
+.sec h3{font-size:19px;margin-bottom:6px}
+.sec p{font-size:15px}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.badges span{font-size:14px;font-weight:500;padding:6px 12px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--ink-2)}
+
+/* faq */
+.faq{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px}
+details{border-top:1px solid var(--line-2);padding:20px 0}
+details:last-child{border-bottom:1px solid var(--line-2)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:19px;letter-spacing:-.01em}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:400;color:var(--ink-3);font-size:22px;transition:transform .2s var(--ease)}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:12px;font-size:17px;max-width:38em}
+
+/* cta */
+.cta{background:var(--stage);border-radius:var(--r-l);padding:88px 32px;text-align:center}
+.cta h2{max-width:14em;margin:0 auto}
+.cta p{margin:16px auto 32px;max-width:30em}
+.cta .ctas{display:flex;justify-content:center;gap:12px}
+
+/* footer */
+footer{padding:80px 0 40px;font-size:14px;color:var(--ink-2)}
+footer .cols{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:32px}
+footer h5{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:14px}
+footer ul{list-style:none;padding:0;display:grid;gap:10px}
+footer a:hover{color:var(--ink)}
+footer .legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12px}
+
+/* aparición sobria */
+.in{opacity:0;transform:translateY(8px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.in.on{opacity:1;transform:none}
+
+@media (max-width:960px){
+  h1{font-size:44px}
+  h2{font-size:36px}
+  .nav ul,.nav .right .login{display:none}
+  .hero{padding:48px 0 72px}
+  .hero .wrap,.head,.quote,.faq{grid-template-columns:minmax(0,1fr);gap:32px}
+  .hero-visual{padding:0}
+  .float{position:relative;right:auto;bottom:auto;width:auto;margin-top:12px}
+  .app{font-size:12px}
+  .crumb{display:none}
+  .app-kpis div:nth-child(3){display:none}
+  .app-kpis{grid-template-columns:1fr 1fr}
+  .app-kpis strong{font-size:18px;white-space:nowrap}
+  .hero .app table th:nth-child(2),.hero .app table td:nth-child(2){display:none}
+  .metrics .wrap{grid-template-columns:1fr 1fr}
+  .metrics div:nth-child(3){padding-left:0;border-left:0}
+  .metrics div:nth-child(n+3){border-top:1px solid var(--line)}
+  section.block{padding:88px 0}
+  .steps,.sec,.grid3{grid-template-columns:minmax(0,1fr)}
+  .dash{grid-template-columns:minmax(0,1fr)}
+  .dash aside{display:none}
+  .photo{height:460px}
+  blockquote{font-size:22px}
+  .cta{padding:64px 20px}
+  .cta .ctas{flex-direction:column;align-items:center}
+  footer .cols{grid-template-columns:1fr 1fr}
+  footer .cols>div:first-child{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){.in{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<div class="announce">Nuevo: conectores directos con 31 bancos de Colombia y México. <a href="#integraciones">Ver la lista →</a></div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 22l8-5 8 5z" fill="#0b0b0b"/></svg>Norte</a>
+    <ul>
+      <li><a href="#producto">Producto</a></li>
+      <li><a href="#como">Cómo funciona</a></li>
+      <li><a href="#seguridad">Seguridad</a></li>
+      <li><a href="#clientes">Clientes</a></li>
+      <li><a href="#precios">Precios</a></li>
+    </ul>
+    <div class="right">
+      <a class="login" href="#">Iniciar sesión</a>
+      <a class="btn btn-dark" href="#demo" data-cta-primary>Agenda una demo</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" data-hero>
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Tesorería para empresas en LatAm</p>
+        <h1>La tesorería que se concilia sola.</h1>
+        <p class="lead" style="margin-top:24px">Norte conecta tus bancos, cruza cada movimiento contra tu ERP y te avisa solo cuando algo no cuadra. Tu equipo deja de perseguir extractos y cierra el mes un día antes.</p>
+        <div class="ctas"><a class="btn btn-dark" href="#demo">Agenda una demo</a><a class="link" href="#producto">Ver el producto →</a></div>
+        <div class="proof">
+          <span><svg viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6z"/></svg>SOC 2 Tipo II</span>
+          <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>9 países</span>
+          <span><svg viewBox="0 0 24 24"><path d="M4 19h16M7 16V9m5 7V5m5 11v-4"/></svg>140 tesorerías</span>
+        </div>
+      </div>
+
+      <div class="hero-visual in">
+        <div class="app" role="img" aria-label="Pantalla de conciliación de Norte">
+          <div class="app-top"><span class="dots"><i></i><i></i><i></i></span><span class="crumb">Conciliación / <b>Marzo 2026</b></span><span class="pill pos">Sincronizado hace 2 min</span></div>
+          <div class="app-kpis">
+            <div><small>Movimientos</small><strong class="num">18.412</strong></div>
+            <div><small>Conciliado automático</small><strong class="num">97,8 %</strong><em>+1,2</em></div>
+            <div><small>Por revisar</small><strong class="num">23</strong></div>
+          </div>
+          <table>
+            <colgroup><col style="width:34%"><col style="width:23%"><col style="width:21%"><col style="width:22%"></colgroup>
+            <thead><tr><th>Movimiento</th><th>Cuenta</th><th class="r">Monto</th><th>Estado</th></tr></thead>
+            <tbody>
+              <tr><td>Recaudo PSE · lote 2231</td><td><span class="bank" style="background:#1f4fa3">BC</span>Corriente 4401</td><td class="r num">$ 48.210.000</td><td><span class="pill pos">Conciliado</span></td></tr>
+              <tr><td>Pago proveedor · Transportes Ruta</td><td><span class="bank" style="background:#c0392b">DV</span>Corriente 1180</td><td class="r num">−$ 12.954.300</td><td><span class="pill pos">Conciliado</span></td></tr>
+              <tr><td>Comisión ACH</td><td><span class="bank" style="background:#1f4fa3">BC</span>Corriente 4401</td><td class="r num">−$ 18.900</td><td><span class="pill pos">Regla</span></td></tr>
+              <tr><td>Transferencia recibida · Almacenes Sur</td><td><span class="bank" style="background:#0f7a5a">BB</span>Ahorros 0921</td><td class="r num">$ 7.402.000</td><td><span class="pill warn">Parcial</span></td></tr>
+              <tr><td>Nómina quincena 2</td><td><span class="bank" style="background:#c0392b">DV</span>Corriente 1180</td><td class="r num">−$ 231.880.450</td><td><span class="pill pos">Conciliado</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="float">
+          <div class="row"><span class="pill neg">Diferencia</span><span style="color:var(--ink-3)">hace 4 min</span></div>
+          <h4>Almacenes Sur pagó $ 12.000 menos</h4>
+          <p>Coincide con la retención ICA del 1,2 % sobre FV-88190. ¿Registrarla y cerrar el movimiento?</p>
+          <div class="acts"><span class="no">Revisar</span><span class="ok">Registrar retención</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="metrics" id="clientes">
+    <div class="wrap">
+      <div><strong class="num">$ 4,2 B</strong><span>conciliados cada mes</span></div>
+      <div><strong class="num">97,8 %</strong><span>de movimientos sin intervención</span></div>
+      <div><strong class="num">−1 día</strong><span>en el cierre contable, en promedio</span></div>
+      <div><strong class="num">4 semanas</strong><span>de la firma a producción</span></div>
+    </div>
+  </div>
+
+  <section class="block" id="como">
+    <div class="wrap">
+      <div class="head in">
+        <div><p class="eyebrow">Cómo funciona</p><h2>Tres pasos. Ninguno es una hoja de cálculo.</h2></div>
+        <p>Norte se conecta a lo que ya usas. No cambias de banco, ni de ERP, ni de proceso de aprobación: solo dejas de hacer a mano lo que una máquina hace mejor.</p>
+      </div>
+      <div class="steps">
+        <div class="in">
+          <div class="stage" role="img" aria-label="Lista de conexiones bancarias y ERP activas"><div class="mini">
+            <div class="k">Conexiones</div>
+            <div class="line"><span><span class="bank" style="background:#1f4fa3">BC</span><b>Bancolombia</b></span><span class="pill pos">Activa</span></div>
+            <div class="line"><span><span class="bank" style="background:#c0392b">DV</span><b>Davivienda</b></span><span class="pill pos">Activa</span></div>
+            <div class="line"><span><span class="bank" style="background:#0f7a5a">BB</span><b>BBVA México</b></span><span class="pill pos">Activa</span></div>
+            <div class="line"><span><span class="bank" style="background:#555">SAP</span><b>SAP S/4HANA</b></span><span class="pill neu">ERP</span></div>
+          </div></div>
+          <p class="k">01</p><h3>Conecta</h3><p>Bancos por API o SFTP y tu ERP en modo solo lectura. Sin descargar extractos nunca más.</p>
+        </div>
+        <div class="in">
+          <div class="stage" role="img" aria-label="Coincidencia sugerida entre un recaudo y una factura"><div class="mini">
+            <div class="k">Coincidencia sugerida · 99 %</div>
+            <div class="line"><span><b>Recaudo PSE · lote 2231</b><br><small>Corriente 4401 · 14 mar</small></span><span class="num">$ 48,2 M</span></div>
+            <div class="line"><span><b>Factura FV-88213</b><br><small>Comercial Andina S.A.S.</small></span><span class="num">$ 48,2 M</span></div>
+            <div class="line"><small>Monto, fecha y referencia coinciden</small><span class="pill pos">Conciliado</span></div>
+          </div></div>
+          <p class="k">02</p><h3>Concilia</h3><p>Cada movimiento se cruza por monto, fecha, referencia y contraparte. Las reglas que creas se aplican solas.</p>
+        </div>
+        <div class="in">
+          <div class="stage" role="img" aria-label="Checklist del cierre de marzo"><div class="mini">
+            <div class="k">Cierre de marzo</div>
+            <div class="line"><span>Extractos completos</span><span class="pill pos">9/9</span></div>
+            <div class="line"><span>Partidas abiertas</span><span class="pill warn">3</span></div>
+            <div class="line"><span>Aprobación de tesorería</span><span class="pill neu">Pendiente</span></div>
+            <div class="line"><span><b>Listo para cerrar</b></span><span class="num" style="color:var(--ink-3)">29 mar</span></div>
+          </div></div>
+          <p class="k">03</p><h3>Cierra</h3><p>Ves qué falta, quién lo tiene y cuándo. Auditoría con el rastro completo de cada decisión.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block showcase" id="producto">
+    <div class="wrap">
+      <div class="center in">
+        <p class="eyebrow">Posición de caja</p>
+        <h2>Toda tu caja, en todas tus cuentas, al minuto.</h2>
+        <p class="lead">Saldos consolidados por entidad, moneda y banco, con la proyección de las próximas seis semanas calculada sobre lo que ya está facturado y por pagar.</p>
+      </div>
+      <div class="app in" role="img" aria-label="Panel de posición de caja de Norte">
+        <div class="app-top"><span class="dots"><i></i><i></i><i></i></span><span class="crumb">Tesorería / <b>Posición de caja</b></span><span class="pill neu" style="margin-left:auto">COP · consolidado</span></div>
+        <div class="dash">
+          <aside>
+            <a class="on" href="#">Posición de caja</a><a href="#">Conciliación</a><a href="#">Pagos</a><a href="#">Proyección</a>
+            <span class="sep">Entidades</span><a href="#">Norte Retail S.A.S.</a><a href="#">Norte Logística S.A.S.</a><a href="#">Norte México S.A. de C.V.</a>
+          </aside>
+          <div class="main">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap">
+              <div><h4>Saldo consolidado</h4><div class="sub">9 bancos · 31 cuentas · actualizado 10:42</div></div>
+              <div style="text-align:right"><div style="font-size:28px;font-weight:500;letter-spacing:-.03em" class="num">$ 18.640.212.900</div><div class="sub"><span style="color:var(--pos)">+3,4 %</span> vs. semana anterior</div></div>
+            </div>
+            <div class="chart">
+              <svg viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
+                <g stroke="rgba(0,0,0,.06)"><line x1="0" x2="800" y1="40" y2="40"/><line x1="0" x2="800" y1="100" y2="100"/><line x1="0" x2="800" y1="160" y2="160"/></g>
+                <path d="M0,150 C60,140 100,120 160,124 C220,128 260,96 320,92 C380,88 420,108 480,100 C520,95 540,80 560,76 L560,200 L0,200Z" fill="rgba(11,11,11,.05)"/>
+                <path d="M0,150 C60,140 100,120 160,124 C220,128 260,96 320,92 C380,88 420,108 480,100 C520,95 540,80 560,76" fill="none" stroke="#0b0b0b" stroke-width="1.8"/>
+                <path d="M560,76 C620,70 660,96 700,84 C740,72 770,60 800,56" fill="none" stroke="#0b0b0b" stroke-width="1.6" stroke-dasharray="4 5" opacity=".5"/>
+                <line x1="560" x2="560" y1="20" y2="200" stroke="rgba(0,0,0,.15)"/>
+                <circle cx="560" cy="76" r="4" fill="#fff" stroke="#0b0b0b" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <div class="axis"><span>1 feb</span><span>15 feb</span><span>1 mar</span><span>Hoy</span><span>Proyección · 30 abr</span></div>
+            <table style="margin-top:18px;border-top:1px solid var(--line)">
+              <thead><tr><th style="padding-left:0">Banco</th><th>Cuentas</th><th class="r">Saldo</th><th class="r" style="padding-right:0">Variación 7d</th></tr></thead>
+              <tbody>
+                <tr><td style="padding-left:0"><span class="bank" style="background:#1f4fa3">BC</span>Bancolombia</td><td>12</td><td class="r num">$ 7.212.400.000</td><td class="r num" style="padding-right:0;color:var(--pos)">+4,1 %</td></tr>
+                <tr><td style="padding-left:0"><span class="bank" style="background:#c0392b">DV</span>Davivienda</td><td>8</td><td class="r num">$ 5.880.120.300</td><td class="r num" style="padding-right:0;color:var(--pos)">+2,7 %</td></tr>
+                <tr><td style="padding-left:0"><span class="bank" style="background:#0f7a5a">BB</span>BBVA México</td><td>6</td><td class="r num">$ 3.104.692.600</td><td class="r num" style="padding-right:0;color:var(--neg)">−0,9 %</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="in"><h3>Multimoneda de verdad</h3><p>COP, MXN, USD y PEN con la tasa del día de cada banco, no un promedio que nadie puede auditar.</p></div>
+        <div class="in"><h3>Proyección que se corrige sola</h3><p>Cada factura emitida y cada orden de pago mueve la proyección. Sin modelos que hay que actualizar el lunes.</p></div>
+        <div class="in"><h3>Permisos por entidad</h3><p>Cada equipo ve sus cuentas. Las aprobaciones siguen tu matriz de firmas, con doble control para montos altos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="photo" aria-label="Presencia regional">
+    <img src="img/ciudad.jpg" alt="Vista aérea nocturna de una ciudad" loading="lazy" width="3976" height="2652">
+    <div class="wrap">
+      <p class="eyebrow" style="color:rgba(255,255,255,.7)">Hecho para LatAm</p>
+      <h2>Bancos locales, impuestos locales, horarios locales.</h2>
+      <p>Retenciones en la fuente, ICA, ISR, IVA y los cortes ACH de cada país vienen configurados. No adaptamos un producto gringo: lo construimos aquí.</p>
+    </div>
+    <span class="credit">Foto: Dennis Kummer · CC0</span>
+  </section>
+
+  <section class="block">
+    <div class="wrap quote">
+      <div class="in">
+        <blockquote>“Pasamos de nueve personas conciliando a dos revisando excepciones. El cierre de marzo fue el primero en cuatro años que terminó un jueves.”</blockquote>
+        <div class="who"><span class="mono">VR</span><span><b>Valentina Rojas</b><span>Directora de Tesorería, Comercial Andina</span></span></div>
+      </div>
+      <div class="case in">
+        <div class="row"><span>Movimientos al mes</span><strong class="num">212.000</strong></div>
+        <div class="row"><span>Conciliación automática</span><strong class="num">98,4 %</strong></div>
+        <div class="row"><span>Horas ahorradas al mes</span><strong class="num">1.140</strong></div>
+        <div class="row"><span>En producción</span><strong>5 semanas</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="seguridad" style="padding-top:0">
+    <div class="wrap">
+      <div class="head in">
+        <div><p class="eyebrow">Seguridad</p><h2>Leemos tus cuentas. No movemos tu dinero.</h2></div>
+        <p>Norte se conecta en modo solo lectura. Los pagos salen de tu banco, con tus firmas, como siempre.</p>
+      </div>
+      <div class="sec">
+        <div class="in"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><h3>Cifrado en todo el camino</h3><p>TLS 1.3 en tránsito y AES-256 en reposo, con llaves rotadas cada 90 días.</p></div>
+        <div class="in"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg><h3>Auditado por terceros</h3><p>SOC 2 Tipo II e ISO 27001, con pruebas de penetración externas dos veces al año.</p></div>
+        <div class="in"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><h3>Rastro completo</h3><p>Cada regla, aprobación y cambio queda registrado con usuario, hora e IP.</p></div>
+      </div>
+      <div class="badges in"><span>SOC 2 Tipo II</span><span>ISO 27001</span><span>Ley 1581 · Colombia</span><span>LFPDPPP · México</span><span>Datos alojados en la región</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="precios" style="padding-top:0">
+    <div class="wrap faq">
+      <div class="in"><p class="eyebrow">Preguntas frecuentes</p><h2>Lo que nos preguntan en la primera llamada.</h2></div>
+      <div class="in">
+        <details open><summary>¿Cuánto tarda la implementación?</summary><p>Entre cuatro y seis semanas. La primera semana conectamos bancos y ERP; las siguientes ajustamos reglas con tu equipo sobre tus movimientos reales, no sobre datos de ejemplo.</p></details>
+        <details><summary>¿Necesito cambiar de ERP o de banco?</summary><p>No. Norte trabaja con SAP, Oracle NetSuite, Siesa, World Office y Odoo, y con 31 bancos de Colombia y México. Si usas otro, lo conectamos por SFTP.</p></details>
+        <details><summary>¿Cómo se cobra?</summary><p>Una tarifa mensual según el número de cuentas bancarias conectadas, desde 12 cuentas. Sin cobro por movimiento ni por usuario.</p></details>
+        <details><summary>¿Qué pasa con los movimientos que Norte no concilia?</summary><p>Quedan en una bandeja de excepciones con la mejor sugerencia y la razón. Cuando tu equipo decide, Norte aprende la regla para la próxima vez.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:0 0 64px" id="demo">
+    <div class="wrap">
+      <div class="cta in">
+        <h2>Cierra el próximo mes un día antes.</h2>
+        <p>Treinta minutos con un especialista y tus propios extractos. Si no te ahorra tiempo, te lo decimos en la llamada.</p>
+        <div class="ctas"><a class="btn btn-dark" href="#demo" data-cta-final>Agenda una demo</a><a class="btn btn-light" href="#producto">Ver el producto</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><a class="logo" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 22l8-5 8 5z" fill="#0b0b0b"/></svg>Norte</a><p style="margin-top:14px;max-width:22em;font-size:14px">Tesorería y conciliación para empresas en América Latina. Bogotá · Ciudad de México.</p></div>
+      <div><h5>Producto</h5><ul><li><a href="#">Conciliación</a></li><li><a href="#">Posición de caja</a></li><li><a href="#">Proyección</a></li><li><a href="#">Pagos</a></li></ul></div>
+      <div><h5>Integraciones</h5><ul id="integraciones"><li><a href="#">Bancos</a></li><li><a href="#">ERP</a></li><li><a href="#">API</a></li></ul></div>
+      <div><h5>Recursos</h5><ul><li><a href="#">Guía de cierre</a></li><li><a href="#">Casos</a></li><li><a href="#">Blog</a></li><li><a href="#">Estado del servicio</a></li></ul></div>
+      <div><h5>Compañía</h5><ul><li><a href="#">Nosotros</a></li><li><a href="#">Empleos</a></li><li><a href="#">Seguridad</a></li><li><a href="#">Contacto</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Norte Labs — marca ficticia de demostración. Foto: Dennis Kummer (StockSnap, CC0).</span><span><a href="#">Privacidad</a> · <a href="#">Términos</a> · Español</span></div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById("nav");
+  addEventListener("scroll", () => nav.classList.toggle("scrolled", scrollY > 8), { passive: true });
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".in").forEach((el) => io.observe(el));
+</script>
+</body>
+</html>

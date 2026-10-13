@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- Render fijo del producto con fondo transparente (para la app, OG images, emails).
+     Uso: node scripts/still.mjs http://localhost:4800/still.html out/car.png -->
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script></head>
+<body><canvas id="c" width="1600" height="900"></canvas>
+<script type="module">
+import * as THREE from "three";
+import { loadProduct } from "./product.js";
+const q = new URLSearchParams(location.search);
+const canvas = document.getElementById("c");
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(1600, 900, false);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+const scene = new THREE.Scene();
+// Entorno de estudio cálido (mismo espíritu que el cielo de la landing).
+const env = new THREE.Scene();
+env.add(new THREE.Mesh(new THREE.SphereGeometry(10, 32, 16), new THREE.ShaderMaterial({
+  side: THREE.BackSide,
+  vertexShader: "varying vec3 d; void main(){ d = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }",
+  fragmentShader: "varying vec3 d; void main(){ vec3 c = mix(vec3(1.,.45,.25), vec3(.5,.06,.3), smoothstep(0.,.5,d.y)); c = mix(vec3(.08,.02,.06), c, smoothstep(-.1,0.,d.y)); gl_FragColor = vec4(c,1.); }",
+})));
+const pm = new THREE.PMREMGenerator(renderer);
+scene.environment = pm.fromScene(env, 0.02).texture;
+const key = new THREE.DirectionalLight(0xffd2b0, 2.2); key.position.set(-4, 5, 6); scene.add(key);
+const product = await loadProduct({ manager: new THREE.LoadingManager(), mobile: false });
+if (q.get("variant") && product.select) await product.select(q.get("variant"));
+scene.add(product.object);
+const camera = new THREE.PerspectiveCamera(24, 16 / 9, 0.1, 100);
+camera.position.set(-7.6, 1.7, -8.2);
+camera.lookAt(0, 0.6, 0);
+renderer.render(scene, camera);
+document.body.dataset.ready = "1";
+</script></body></html>

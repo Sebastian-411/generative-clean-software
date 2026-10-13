@@ -1,0 +1,21 @@
+<!doctype html>
+<!-- Render fijo de una lata (fallback sin WebGL, OG image). node ../../scripts/still.mjs "http://localhost:4800/still.html?flavor=lulo" img/lata-lulo.png -->
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/" } }</script>
+</head><body><canvas id="c" width="600" height="900"></canvas>
+<script type="module">
+import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { createCan } from "./can.js";
+import { paintLabel } from "./labels.example.js"; // tu labels.js
+const flavor = new URLSearchParams(location.search).get("flavor") || "maracuya";
+const r = new THREE.WebGLRenderer({ canvas: document.getElementById("c"), alpha: true, antialias: true, preserveDrawingBuffer: true });
+r.setSize(600, 900, false); r.toneMapping = THREE.ACESFilmicToneMapping;
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), 0.04).texture;
+const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(-3, 4, 5); scene.add(key);
+const can = createCan(await paintLabel(flavor)); scene.add(can);
+const cam = new THREE.PerspectiveCamera(30, 600 / 900, 0.1, 100); cam.position.set(0, 0, 3.2);
+r.render(scene, cam); document.body.dataset.ready = "1";
+</script></body></html>

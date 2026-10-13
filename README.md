@@ -62,7 +62,7 @@ Copia también el bloque `agent` de este `opencode.json` si quieres los subagent
 | `architecture-review` | Orquestador — punto de entrada para diseñar o revisar arquitectura completa |
 | `staff-workflow` | Orquestador multi-agente — desarrollo de punta a punta, con proceso escalado al riesgo del cambio |
 | `greenfield-defaults` | Scaffold desde 0 — monorepo Next.js + Astro + NestJS hexagonal, Docker por app y compose raíz |
-| `frontend-craft` | UI/UX — landings cinematográficas, apps simples y hermosas, `packages/ui`, Playwright de diseño |
+| `frontend-craft` | UI premium — brief → referencias reales → DESIGN.md → construcción por secciones → loop de capturas + rúbrica; `packages/ui`; scripts Playwright para Refero, Haikei y auditoría visual |
 | `domain-driven-design` | Entities, Value Objects, Aggregates, Bounded Contexts, lenguaje ubicuo |
 | `hexagonal-architecture` | Ports & Adapters, driving/driven, aislar el dominio del framework |
 | `clean-architecture` | Regla de dependencia, Use Cases explícitos, composition root |
@@ -81,10 +81,31 @@ Todas las skills comparten un mismo principio rector: **cada abstracción debe j
 | `implementer` | lectura + escritura | Implementa lo mínimo correcto para el problema real |
 | `code-reviewer` | solo lectura | Bugs, seguridad básica, simplificación/reuso sobre el diff |
 | `test-engineer` | tests + lectura de producción | Tests de negocio y bordes, corre el suite |
+| `design-scout` | escribe `design/` + assets | Dirección de arte con navegador: investiga Refero/Watermelon/Motion-Primitives/Haikei, propone direcciones, fija DESIGN.md y critica capturas |
 
 `staff-workflow` los orquesta adaptativamente. Para mediano/grande/sensible, `story-writer` y `planner` dejan `story.md`/`plan.md` en `specs/<timestamp>_<slug>/` con un checkpoint de aprobación humana antes de seguir — un solo pase por documento, sin re-analizar lo que otro agente ya resolvió. Todos los agentes también se pueden invocar sueltos.
 
 En cambios sensibles, usa la revisión de seguridad del host (Cursor: `/review-security`; Claude Code: `security-review` si existe). No la sustituyas por el pase básico de `code-reviewer`.
+
+## Frontend: plantillas incluidas
+
+`frontend-craft` trae plantillas probadas con Playwright (`plugins/architecture-mastery/skills/frontend-craft/templates/`):
+
+| Plantilla | Modo | Para qué |
+|---|---|---|
+| `product-site/` | Producto / B2B (default) | Sitio calibrado contra referencias medidas (Plada, Founderdex, Apple, Vaas): una familia tipográfica, el producto como ilustración y contenido real. `site.spec.ts`. |
+| `app-shell/` | Aplicativo | Pantalla de app simple y hermosa: una acción primaria, estados diseñados, ⌘K. `app.spec.ts`. |
+| `anchor-scene/` | Brutal de producto | El producto 3D viaja por la página y se posa en anclas del DOM (patrón Fizzi), con lata procedural y etiqueta propia. `anchor.spec.ts`. |
+| `scroll-scene/` | Lanzamiento cinematográfico | Escena 3D por actos guiada por scroll, cámara orbital y calidad adaptativa. `scene.spec.ts`. |
+| `patterns/` | Piezas de briefs resueltos | Planeta con escenarios, grafo idea → empresa, linterna, registros escritos, audio ambiente, paleta por sección (ver `briefs.md`). |
+
+Herramientas Playwright en `scripts/`:
+- `dissect.mjs` mide un sitio de referencia.
+- `compare.mjs` pone tu página al lado de las referencias.
+- `scrollscope.mjs` arma el storyboard del scroll.
+- `shoot.mjs` captura y audita.
+- `photos.mjs` busca fotografía con licencia abierta.
+- `refero.mjs`, `haikei.mjs` y `still.mjs` completan el set.
 
 ## Cómo está empaquetado
 

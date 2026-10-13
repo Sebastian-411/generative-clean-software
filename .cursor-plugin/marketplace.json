@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Marketplace with a plugin for DDD, Hexagonal Architecture, Clean Architecture, SOLID, and Design Patterns — built to catch overengineering, not cause it.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "architecture-mastery",
       "source": "plugins/architecture-mastery",
-      "description": "DDD + Hexagonal + Clean Architecture + SOLID + Design Patterns, as one coherent set of skills for designing, reviewing, and refactoring backend systems.",
-      "version": "1.0.0",
+      "description": "DDD + Hexagonal + Clean Architecture + SOLID + Design Patterns for backend systems, plus frontend-craft for premium, measured, Playwright-validated frontends.",
+      "version": "1.1.0",
       "author": {
         "name": "Sebastian-411"
       },
@@ -27,7 +27,11 @@
         "multi-agent",
         "staff-engineer",
         "spec-driven-development",
-        "backend"
+        "backend",
+        "frontend",
+        "ui-design",
+        "playwright",
+        "threejs"
       ]
     }
   ]

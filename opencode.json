@@ -61,6 +61,16 @@
         "edit": "allow",
         "bash": "allow"
       }
+    },
+    "design-scout": {
+      "description": "Director de arte con navegador: investiga referencias reales (Refero Styles, Watermelon UI, Motion-Primitives, Haikei), propone 3 direcciones visuales y deja design/DESIGN.md listo; en modo critique puntúa capturas contra la rúbrica premium.",
+      "mode": "subagent",
+      "prompt": "{file:./plugins/architecture-mastery/agents/design-scout.md}",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
+        "webfetch": "allow"
+      }
     }
   }
 }

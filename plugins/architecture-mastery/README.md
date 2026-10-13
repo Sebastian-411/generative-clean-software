@@ -4,7 +4,7 @@ DDD + Hexagonal + Clean Architecture + SOLID + Design Patterns, como un solo set
 
 Compatible con Claude Code, Cursor, Codex y OpenCode. El contenido canónico es esta carpeta (`skills/` + `agents/`). Los manifiestos por host viven al lado (`.claude-plugin/`, `.cursor-plugin/`, `.codex-plugin/`, `plugin.json` portable).
 
-Empieza siempre por `architecture-review`: decide primero si la complejidad se justifica, y solo entonces invoca al resto de skills en orden (dominio -> fronteras -> SOLID -> patrones). Si el pedido es un proyecto desde 0, aplica además `greenfield-defaults` (monorepo Next.js + Astro + NestJS hexagonal, Docker por app y compose raíz). Toda UI sigue `frontend-craft`: landing cinematográfica, app simple y hermosa, design system en `packages/ui`, diseño validado con Playwright.
+Empieza siempre por `architecture-review`: decide primero si la complejidad se justifica, y solo entonces invoca al resto de skills en orden (dominio -> fronteras -> SOLID -> patrones). Si el pedido es un proyecto desde 0, aplica además `greenfield-defaults` (monorepo Next.js + Astro + NestJS hexagonal, Docker por app y compose raíz). Toda UI sigue `frontend-craft`: el agente `design-scout` investiga referencias reales (Refero Styles, Watermelon UI, Motion-Primitives, Haikei) con Playwright y fija un `DESIGN.md`; se construye por secciones y se itera con capturas + rúbrica premium hasta que la página se ve de agencia, no generada por IA. Antes, se calibra contra sitios reales medidos (`dissect.mjs`, `reference-bar.md`) y se compara lado a lado (`compare.mjs`). Trae plantillas probadas con Playwright: `product-site` (default), `app-shell`, `anchor-scene` (producto 3D que viaja por la página), `scroll-scene` (lanzamiento cinematográfico) y `patterns` (piezas de cinco briefs resueltos, ver `briefs.md`).
 
 Para desarrollo de punta a punta (spec + diseñar + implementar + revisar + testear), usa la skill `staff-workflow`: clasifica el cambio (trivial/pequeño/mediano/sensible) y solo entonces decide a cuáles de estos agentes invocar. Para mediano/grande/sensible, antes de tocar código pasa por `story.md` y `plan.md` en `specs/` con aprobación humana en cada checkpoint — inspirado en Spec-Driven Development, pero con disciplina de un solo pase por documento para que no se vuelva lento.
 
@@ -16,5 +16,6 @@ Para desarrollo de punta a punta (spec + diseñar + implementar + revisar + test
 | `implementer` | lectura + escritura | Implementa lo mínimo correcto, fase por fase |
 | `code-reviewer` | solo lectura | Bugs, seguridad básica, simplificación/reuso sobre el diff |
 | `test-engineer` | tests + lectura de producción | Tests de negocio y bordes, corre el suite |
+| `design-scout` | escribe `design/` + assets | Dirección de arte con navegador: referencias reales, 3 direcciones, DESIGN.md, crítica visual por rondas |
 
 Ver el README raíz del repo para instalación por host y la tabla completa de skills.

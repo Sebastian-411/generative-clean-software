@@ -11,7 +11,7 @@ Un staff engineer no aplica el mismo proceso a un typo que a un módulo nuevo co
 
 ## Paso 0 — Clasifica el cambio antes de invocar a nadie
 
-Si el pedido es un proyecto desde 0 o la carpeta está vacía, clasifícalo como **mediano/grande** (o **sensible** si toca auth/pagos/PII) y pasa `greenfield-defaults` + `frontend-craft` como restricción fija a `architecture-reviewer`, `planner` e `implementer`: monorepo, Next.js + Astro + NestJS hexagonal, Docker por app y compose raíz, UI de producción (landing trailer / app simple), Playwright de diseño. No dejes que elijan otro stack ni un frontend de template.
+Si el pedido es un proyecto desde 0 o la carpeta está vacía, clasifícalo como **mediano/grande** (o **sensible** si toca auth/pagos/PII) y pasa `greenfield-defaults` + `frontend-craft` como restricción fija a `architecture-reviewer`, `planner` e `implementer`: monorepo, Next.js + Astro + NestJS hexagonal, Docker por app y compose raíz, UI de producción vía `frontend-craft` (`design-scout` fija dirección y DESIGN.md antes de `implementer`, y critica capturas al final), Playwright de diseño. No dejes que elijan otro stack ni un frontend de template.
 
 Responde tú mismo, en el hilo principal, sin gastar un subagente en esto:
 

@@ -18,6 +18,7 @@ Este repo es un plugin multi-host (Claude Code, Cursor, Codex, OpenCode). El cri
 | `implementer` | lectura + escritura | Mínimo código correcto |
 | `code-reviewer` | solo lectura | Bugs, seguridad básica, simplificación |
 | `test-engineer` | solo tests | Casos de negocio y bordes |
+| `design-scout` | escribe `design/` + assets | Dirección de arte: referencias reales, DESIGN.md, crítica visual |
 
 Cada agente y cada abstracción deben justificar su existencia. Un typo no pasa por cuatro agentes. Un CRUD sin reglas no necesita más patrones de los del scaffold.
 
@@ -29,7 +30,7 @@ Si la carpeta está vacía o no hay stack, usa `greenfield-defaults` sin pregunt
 - Cada app: su `Dockerfile`, su imagen y su `docker-compose.yml`.
 - Raíz: `docker-compose.yml` que construye y levanta backend y frontends a la vez.
 - Hexagonal solo en el API. El usuario puede overridear piezas; el resto se mantiene.
-- UI: skill `frontend-craft`. Landings (Astro) interactivas: un 3D, efectos al scroll, actos coreografiados. Apps (Next) simples y hermosas, cero espectáculo. Componentes en `packages/ui`. Playwright valida hero, un acto a mitad de scroll, y la pantalla de app.
+- UI: skill `frontend-craft`. Antes de construir, `design-scout` investiga referencias reales (Refero, Watermelon, Motion-Primitives, Haikei) y fija `design/DESIGN.md`; se construye por secciones (hero primero) y se itera con capturas 1440/390 + rúbrica premium hasta pasar. Calibra contra referencias medidas (`dissect.mjs`, `reference-bar.md`) y compara lado a lado (`compare.mjs`). Sitios (Astro) sobre `templates/product-site` (default), `templates/anchor-scene` para producto físico con personalidad (el 3D viaja por la página) y `templates/scroll-scene` solo para lanzamientos con assets oficiales; briefs experimentales con las piezas de `templates/patterns` (ver `briefs.md`); apps (Next) sobre `templates/app-shell` (una acción por pantalla, estados diseñados, ⌘K, `app.spec.ts`). Componentes en `packages/ui`.
 
 ## Hosts
 

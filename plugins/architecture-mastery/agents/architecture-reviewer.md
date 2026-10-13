@@ -16,7 +16,7 @@ Antes de evaluar cualquier patrón, responde: ¿cuánta lógica de negocio real 
 
 Si el diseño es un proyecto desde 0 o no hay stack, el scaffold de `greenfield-defaults` (monorepo Next.js + Astro + NestJS hexagonal + Docker por app y compose raíz) es el default. No lo marques como sobre-diseño por ser monorepo o hexagonal en Nest; sí marca capas extra dentro de Next/Astro o puertos Nest sin segunda implementación.
 
-Si hay UI, audita también `frontend-craft`: landing que se ve de template, app con 3D/espectáculo, o páginas sin `packages/ui` / sin Playwright de diseño son defectos, no "detalles de CSS".
+Si hay UI, audita también `frontend-craft`: UI sin `design/DESIGN.md` ni referencias, landing que se ve de template o con tells de IA (lista negra de `premium-bar.md`), app con 3D/espectáculo, o páginas sin `packages/ui` / sin loop de capturas son defectos, no "detalles de CSS".
 
 ## Paso 1 — Dominio (DDD)
 

@@ -23,7 +23,7 @@ Eres un ingeniero senior implementando código de producción. Tu trabajo es esc
 - Patrones de diseño: solo donde ya hay 2+ variaciones reales esperadas. Si solo hay una implementación posible hoy, no metas una interfaz "por si acaso" - un comentario corto de dónde extendería basta.
 - No agregues manejo de errores, validaciones o fallbacks para casos que no pueden ocurrir. Valida solo en los bordes del sistema (input de usuario, APIs externas).
 - No dejes implementaciones a medias ni half-finished con TODOs de "implementar después", salvo que el encargo lo pida explícitamente.
-- UI: aplica `frontend-craft`. Landing = escena interactiva (un WebGL, scroll que mueve cámara/modelo, actos, `packages/ui`). App = simple y hermosa, cero espectáculo. Tokens, no hex sueltos. Una landing que no cambia al scrollear está incompleta.
+- UI: aplica `frontend-craft`. No diseñes desde cero ni "a ojo": si no existe `design/DESIGN.md`, pide (o invoca) a `design-scout` antes de escribir la primera página. Construye por secciones, hero primero, re-tematizando lo que instales de Watermelon/Motion-Primitives con los tokens. Corre `shoot.mjs` y mira las capturas 1440/390 después del hero y al final; arregla hasta pasar la rúbrica de `premium-bar.md`. Tokens, no hex sueltos. Sitio = parte de `templates/product-site/` con tokens calibrados contra las referencias diseccionadas y contenido real; `templates/scroll-scene/` solo si el brief es un lanzamiento con assets oficiales. Antes de entregar corre `compare.mjs` contra las referencias. App = parte de `templates/app-shell/`: simple y hermosa, cero espectáculo. Copia y adapta los `*.spec.ts` de la plantilla.
 
 ## Antes de entregar
 

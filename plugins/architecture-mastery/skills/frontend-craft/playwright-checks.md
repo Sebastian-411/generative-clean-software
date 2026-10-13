@@ -1,81 +1,98 @@
-# Playwright — validación de diseño
+# Playwright — loop de crítica visual y regresión de diseño
 
-Vive junto al frontend que tocas (`apps/site` y/o `apps/web`). No es opcional en cambios de UI.
+Dos usos distintos:
 
-## Setup
+1. **Loop de crítica** (durante el diseño): `scripts/shoot.mjs` captura y audita para que el agente **vea** lo que construyó. Es donde se gana la calidad.
+2. **Tests de regresión** (en el repo): `@playwright/test` congela lo aprobado para que no se rompa después.
 
-- `@playwright/test`
-- Proyectos: `chromium` desktop `1440x900` y mobile `390x844`
-- `toHaveScreenshot` con `maxDiffPixels` bajo. Si el 3D tiembla, snapshot del **poster/fallback** + assert de que el canvas existe (`data-scene-ready`)
-- Artefactos en `test-results/`; no commitees diffs accidentales
+## 1. Loop de crítica
 
-## Landings (`apps/site`)
+```bash
+node <skill>/scripts/shoot.mjs http://localhost:4321 --out design/shots/round-1
+node <skill>/scripts/shoot.mjs http://localhost:4321 --out design/shots/round-1-rm --reduced-motion
+```
 
-Por cada landing nueva o hero tocado:
+Genera `desktop-*.png` y `mobile-*.png` (fold, full, 4 cortes de scroll) y `audit.json` con alertas objetivas: familias y tamaños tipográficos, radios, gradientes violeta→azul, sombras en exceso, hero tímido, titulares sin tracking, líneas largas, párrafos centrados, emoji, imágenes rotas, overflow, errores de consola, CTAs compitiendo.
+
+Por ronda:
+
+1. Abre y **mira** las capturas (fold desktop, fold mobile, cortes). Compáralas con `design/references/*/style-page.png`.
+2. Puntúa la rúbrica de `premium-bar.md`. Escribe en `design/shots/round-N/notes.md`: puntaje por fila + defectos numerados por impacto.
+3. Arregla, de mayor a menor impacto. Siguiente ronda.
+
+Defectos que este loop encuentra casi siempre en la ronda 1 (búscalos a propósito):
+
+- **Texto con gradiente que desaparece** al envolver palabras en spans animados: el gradiente va en cada `.word`, no en el padre. (`audit.json` lo marca como "Texto invisible".)
+- **Overflow por halos/fondos decorativos** con `inset` negativo: usa `overflow-x: clip` en `html` y `body`, no solo `hidden` en `body`.
+- **Botones partidos en mobile**: `white-space: nowrap` en botones y CTAs apilados a ancho completo bajo 900px.
+- **Escala tipográfica sin gobierno** (15+ tamaños): todo tamaño sale de un token `--t-*`.
+- **Radios de compromiso** (12/16/18 mezclados): un token por tipo de elemento.
+- **Marcos dobles** en cards con `padding` sobre un fondo-hairline.
+
+`design/shots/` va en `.gitignore`; solo se versionan `notes.md` si el equipo quiere historial.
+
+Una alerta de `audit.json` se puede aceptar solo si `design/DESIGN.md` la justifica (ej. "3 familias: display serif + body + mono para datos").
+
+## 2. Tests de regresión (`apps/site`, `apps/web`)
+
+- `@playwright/test`, proyectos `desktop` 1440x900 y `mobile` 390x844.
+- `toHaveScreenshot` con `maxDiffPixels` bajo, `animations: "disabled"`, esperando `document.fonts.ready`.
+- Si hay escena 3D/canvas: snapshot del poster/fallback y assert de `data-scene-ready`; no compares frames WebGL.
 
 ```ts
-test("landing hero — desktop", async ({ page }) => {
+import { test, expect } from "@playwright/test";
+
+test.beforeEach(async ({ page }) => {
   await page.goto("/");
-  await page.locator("[data-hero]").waitFor();
-  await expect(page.locator("[data-hero]")).toHaveScreenshot("hero-desktop.png");
-  await expect(page.locator("[data-cta-primary]")).toBeVisible();
-  await expect(page.locator("body")).not.toHaveCSS("overflow-x", "scroll");
+  await page.evaluate(() => document.fonts.ready);
 });
 
-test("landing hero — mobile", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
-  await expect(page.locator("[data-hero]")).toHaveScreenshot("hero-mobile.png");
+test("hero aprobado", async ({ page }) => {
+  const hero = page.locator("[data-hero]");
+  await expect(hero).toHaveScreenshot("hero.png", { animations: "disabled" });
   await expect(page.locator("[data-cta-primary]")).toBeInViewport();
 });
 
-test("reduced-motion no rompe el hero", async ({ page }) => {
+test("página completa sin overflow ni errores", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.reload();
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > window.innerWidth + 1,
+  );
+  expect(overflow).toBe(false);
+  expect(errors).toEqual([]);
+  await expect(page).toHaveScreenshot("full.png", { fullPage: true, animations: "disabled" });
+});
+
+test("reduced-motion sigue dirigido", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.reload();
   await expect(page.locator("[data-hero]")).toBeVisible();
   await expect(page.locator("[data-cta-primary]")).toBeVisible();
-  await expect(page.locator("[data-hero]")).toHaveScreenshot("hero-reduced-motion.png");
+  await expect(page.locator("[data-hero]")).toHaveScreenshot("hero-reduced.png");
+});
+
+test("el CTA primario lleva a algún lado", async ({ page }) => {
+  const href = await page.locator("[data-cta-primary]").getAttribute("href");
+  expect(href && href !== "#").toBeTruthy();
 });
 ```
 
-Si hay escena 3D:
+Si el momento firma depende del scroll (pin, escena), añade un test que scrollee al 45 % y compruebe que el estado cambió (`data-act`, clase, transform) + snapshot a mitad de scroll.
 
-- El canvas lleva `data-scene` y pasa a `data-scene-ready` cuando la primera frame es estable.
-- Un test confirma que, sin WebGL (o con reduced-motion), `[data-hero-fallback]` se ve y el CTA sigue.
+### Aplicativo (`apps/web`)
 
-Happy path: click del CTA llega a destino (signup, demo, `#act-2`), no a un `href="#"`.
+Por pantalla tocada:
 
-Scroll-escena (obligatorio en landing):
-
-```ts
-test("el scroll cambia de acto", async ({ page }) => {
-  await page.goto("/");
-  await page.locator("[data-scene-ready]").waitFor();
-  const before = await page.locator("[data-act]").getAttribute("data-act");
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.45));
-  await page.waitForTimeout(400);
-  const after = await page.locator("[data-act]").getAttribute("data-act");
-  expect(after).not.toEqual(before);
-  await expect(page.locator("[data-act]")).toHaveScreenshot("act-mid-desktop.png");
-});
-```
-
-- Un solo `canvas[data-scene]`.
-- `data-act` avanza al scrollear (1 → 2 o 3).
-- Snapshot a mitad de scroll, no solo el fold.
-
-## Aplicativo (`apps/web`)
-
-Por cada pantalla tocada:
-
-- Screenshot del estado empty y del estado con datos (o fixture).
-- El CTA primario es uno y está visible.
-- El flujo corto (ej. crear X) se completa en el test; no solo "la página carga".
-- No existe `canvas`, `three`, ni video de fondo en rutas de app (`page.locator("canvas").count()` === 0 salvo un canvas de chart 2D justificado).
+- Screenshot de empty y de con-datos (fixture).
+- Un solo CTA primario visible.
+- El flujo corto se completa en el test, no solo "la página carga".
+- Sin `canvas` 3D ni video de fondo en rutas de app.
 
 ## Qué no testear aquí
 
-- Invariantes de dominio (eso es test de Nest / core).
+- Invariantes de dominio (tests de Nest / core).
 - Pixel-perfect del WebGL frame a frame.
 - Cada hover de cada botón.
 

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VANTA GT — Nacido en la hora dorada</title>
+<meta name="description" content="Gran turismo eléctrico. Demo de landing cinematográfica: escena 3D guiada por scroll.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="models/car.glb" as="fetch" crossorigin>
+<link rel="stylesheet" href="./scene.css">
+<!-- Plantilla: copia esta página por marca. Cambian los tokens (bloque <style> sobre :root), product.js,
+     shots/palette del script y el copy. El motor (scene.css, boot.js, scene.js, camera-rig.js, acts.js, variants.js) no se toca. -->
+</head>
+<body class="loading bars">
+<div class="poster" aria-hidden="true"></div>
+<canvas id="scene" data-scene aria-label="VANTA GT en 3D"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="loader" role="status" aria-live="polite">
+  <div class="mark">Vanta</div>
+  <div class="meta"><div class="rule"><i></i></div><span class="label"><span id="pct">0</span>% — calentando motores</span></div>
+</div>
+
+<header class="nav">
+  <a class="brand" href="#act-1">Vanta<span>.</span></a>
+  <nav><a href="#act-2">Rendimiento</a><a href="#act-3">Diseño</a><a href="#act-4">Ficha</a><a href="#act-5">Configurar</a></nav>
+  <a class="btn btn-ghost" href="#act-5">Reservar</a>
+</header>
+<div class="rail" aria-hidden="true">
+  <a href="#act-1" data-to="1">01<i></i></a><a href="#act-2" data-to="2">02<i></i></a><a href="#act-3" data-to="3">03<i></i></a><a href="#act-4" data-to="4">04<i></i></a><a href="#act-5" data-to="5">05<i></i></a>
+</div>
+<div class="dock" aria-hidden="true">
+  <div class="hint" id="hint"><span class="label">Desliza para arrancar</span><i></i></div>
+  <div class="readout" id="readout"><b id="readout-value">0</b><span class="label">km/h · a la velocidad de tu scroll</span></div>
+</div>
+
+<main data-acts data-act="1">
+  <div class="scrim scrim-2"></div><div class="scrim scrim-3"></div><div class="scrim scrim-4"></div><div class="scrim scrim-5"></div>
+
+  <section class="act act-1" id="act-1" data-step="1" data-hero>
+    <div class="inner">
+      <div class="top">
+        <span class="label" data-reveal>Gran turismo eléctrico · 2027</span>
+        <h1><span class="split-line"><span class="glow">Vanta GT</span></span></h1>
+      </div>
+      <div class="bottom">
+        <p class="sub" data-reveal>Nacido en la hora dorada. 1.020 caballos que no hacen ruido hasta que pisas.</p>
+        <div class="ctas" data-reveal><a class="btn btn-ghost" href="#act-2">Ver el recorrido</a><a class="btn btn-primary" href="#act-5" data-cta-primary>Reserva el tuyo →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="act act-2" id="act-2" data-step="2">
+    <div class="inner"><div class="copy">
+      <span class="label" data-reveal>01 — Rendimiento</span>
+      <h2><span class="split-line"><span>0–100</span></span><span class="split-line"><span>en 2,4<small>s</small></span></span></h2>
+      <p data-reveal>Dos motores de flujo axial, uno por eje. El par llega antes de que termines de pensarlo.</p>
+    </div></div>
+  </section>
+
+  <section class="act act-3 right" id="act-3" data-step="3">
+    <div class="inner"><div class="copy">
+      <span class="label" data-reveal>02 — Diseño</span>
+      <h2><span class="split-line"><span>Esculpido</span></span><span class="split-line"><span>por el viento</span></span></h2>
+      <p data-reveal>Cx de 0,21. Cada curva salió del túnel, no del catálogo. Llantas de 21" forjadas en una sola pieza.</p>
+    </div></div>
+  </section>
+
+  <section class="act act-4" id="act-4" data-step="4">
+    <div class="inner">
+      <span class="label" data-reveal>03 — Ficha</span>
+      <h2><span class="split-line"><span>Sin concesiones</span></span></h2>
+      <div class="specs">
+        <div data-reveal><span class="label">Potencia</span><strong data-count="1020">1.020</strong><span>cv combinados</span></div>
+        <div data-reveal><span class="label">Autonomía</span><strong data-count="640">640</strong><span>km WLTP</span></div>
+        <div data-reveal><span class="label">Vel. máx.</span><strong data-count="325">325</strong><span>km/h limitada</span></div>
+        <div data-reveal><span class="label">Carga</span><strong>18 min</strong><span>10 → 80 % a 350 kW</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="act act-5" id="act-5" data-step="5">
+    <div class="inner">
+      <div class="top">
+        <span class="label" data-reveal>04 — Hazlo tuyo</span>
+        <h2><span class="split-line"><span>Elige tu acabado</span></span></h2>
+      </div>
+      <div class="bottom">
+        <div class="swatches" role="group" aria-label="Acabado de carrocería" data-reveal>
+          <button style="--c:#8e0f22" data-variant="Carmine Candy" aria-label="Carmín caramelo" aria-pressed="true"></button>
+          <button style="--c:#ece7e1" data-variant="Pearly Swirly" aria-label="Perla iridiscente" aria-pressed="false"></button>
+          <button style="--c:#3a3a3e" data-variant="Torched Graphite" aria-label="Grafito tostado" aria-pressed="false"></button>
+        </div>
+        <p class="swatch-name" data-reveal>Carmín caramelo</p>
+        <p class="price" data-reveal>Desde <b>189.000 €</b> · Entregas desde primavera 2027</p>
+        <div style="margin-top:26px" data-reveal><a class="btn btn-primary" href="#reservar" data-cta-final>Reservar con 2.500 € →</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="reservar">
+  <div class="row"><span>© 2026 Vanta Automotive — marca ficticia de demostración</span><span>Modelo: <a href="https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept">Car Concept</a>, Khronos glTF Sample Assets · CC BY 4.0</span></div>
+  <div class="big" aria-hidden="true">Vanta</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import { bootScrollScene } from "./boot.js";
+import { loadProduct } from "./product.js";
+
+// El frente del auto mira a +Z; el sol está detrás (en -Z) para el contraluz del hero.
+await bootScrollScene({
+  loadProduct,
+  palette: { sunDir: [0.42, 0.075, -1], rim: { color: 0xff8a5a, intensity: 2.4, pos: [0, 3, -12] } },
+  shots: [
+    { pos: [5.2, 0.6, 6.6], look: [0.25, 1.05, -0.3] },   // 1 3/4 frontal bajo, sol detrás
+    { pos: [6.8, 0.8, -0.2], look: [0, 0.55, -0.2] },     // 2 perfil
+    { pos: [-3.4, 0.6, -3.0], look: [-0.9, 0.45, -1.3] }, // 3 llanta trasera, contrapicado
+    { pos: [0.2, 8.6, -0.6], look: [0, 0, 0] },           // 4 cenital
+    { pos: [-7.2, 1.1, -8.0], look: [0, 0.35, 0.3] },     // 5 trasera 3/4 abierta, auto entre título y configurador
+  ],
+  animate: ({ p, product }) => {
+    product.object.rotation.y = p > 0.62 && p < 0.86 ? (p - 0.62) * 2.6 : product.object.rotation.y * 0.96;
+  },
+  readout: (s) => Math.min(325, Math.round(Math.abs(s.speed) * 38)),
+});
+</script>
+</body>
+</html>

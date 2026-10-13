@@ -1,6 +1,6 @@
 ---
 name: solid-principles
-description: Aplica o revisa los principios SOLID (SRP, OCP, LSP, ISP, DIP) a nivel de clase/módulo. Úsala cuando el usuario pida revisar código por violaciones de SOLID, decidir si una clase hace demasiado, diseñar interfaces, o justificar una abstracción concreta. Trátala como complemento de clean-architecture y hexagonal-architecture, no como sustituto: SOLID opera a nivel de clase, las otras a nivel de sistema.
+description: "Aplica o revisa los principios SOLID (SRP, OCP, LSP, ISP, DIP) a nivel de clase/módulo. Úsala cuando el usuario pida revisar código por violaciones de SOLID, decidir si una clase hace demasiado, diseñar interfaces, o justificar una abstracción concreta. Trátala como complemento de clean-architecture y hexagonal-architecture, no como sustituto: SOLID opera a nivel de clase, las otras a nivel de sistema."
 ---
 
 # Principios SOLID
